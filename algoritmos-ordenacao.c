@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
 
 // Insertion Sort
 void insertion_sort(int arr[], int size) {
@@ -167,13 +167,35 @@ void heap_sort(int arr[], int n){
   }
 }
 
+// Counting Sort
+void counting_sort(int arr[], int size){
+  int max = arr[0];
+  for (int i = 1; i < size; i++) {
+      
+    if (arr[i] > max){
+      max = arr[i];
+    }
+  }
+  
+  int *count = calloc(max+1, sizeof(int));
+  for (int i = 0; i < size; i++) count[arr[i]] ++;
+  
+  int j = 0;
+  for(int i = 0; i < max+1; i ++ ) {
+    while (count[i] > 0) {
+      arr[j] = i;
+      count[i]--;
+      j++;
+    }
+  } 
+  free(count);
+}
 
 int main() {
-  int dados[] = {38, 27, 43, 3, 9, 82, 10};
+  int dados[] = {3, 2, 1, 4, 7, 1};
   int tam = sizeof(dados) / sizeof(dados[0]);
 
-  heap_sort(dados, tam);
+  counting_sort(dados, tam);
   for(int i = 0; i < tam; i++) printf("%d ", dados[i]);
-
   return 0;
 }
