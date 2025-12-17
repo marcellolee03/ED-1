@@ -107,13 +107,42 @@ void merge_sort(int arr[], int size) {
     split(arr, size);
 }
 
+// Quick Sort AUX
+int partition(int arr[], int low, int high){
+  int pivot = arr[high-1];
+  int i = low, j = low;
+  while (i < high) {
+    if (arr[i] < pivot) {
+      int temp = arr[j];
+      arr[j] = arr[i];
+      arr[i] = temp;
+      j++;
+    }
+    i++;
+  }
+  
+  int temp = arr[j];
+  arr[j] = arr[high-1];
+  arr[high-1] = temp; 
+
+  return j;
+}
+
+// Quick Sort
+void quick_sort(int arr[], int low, int high){
+  if (low < high) {
+    int pi = partition(arr, low, high);
+
+    quick_sort(arr, low, pi);
+    quick_sort(arr, pi+1, high);
+  }
+}
 
 int main() {
   int dados[] = {38, 27, 43, 3, 9, 82, 10};
   int tam = sizeof(dados) / sizeof(dados[0]);
 
-  merge_sort(dados, tam);
-
+  quick_sort(dados, 0, tam);
   for(int i = 0; i < tam; i++) printf("%d ", dados[i]);
 
   return 0;
