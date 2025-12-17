@@ -138,11 +138,41 @@ void quick_sort(int arr[], int low, int high){
   }
 }
 
+// Heap Sort AUX
+void heapify(int arr[], int n, int i){
+  int largest = i;
+  int left = 2*i + 1;
+  int right = 2*i + 2;
+
+  if (left < n && arr[left] > arr[largest]) largest = left;
+  if (right < n && arr[right] > arr[largest]) largest = right;
+  if (largest != i) {
+    int temp = arr[i];
+    arr[i] = arr[largest];
+    arr[largest] = temp;
+    heapify(arr, n, largest);
+  }
+
+}
+
+// Heap Sort
+void heap_sort(int arr[], int n){
+  for (int i = (n/2) - 1; i >= 0; i--) heapify(arr, n, i);
+  for (int i = n-1; i > 0; i--) {
+    int temp = arr[i];
+    arr[i] = arr[0];
+    arr[0] = temp;
+
+    heapify(arr, i, 0);
+  }
+}
+
+
 int main() {
   int dados[] = {38, 27, 43, 3, 9, 82, 10};
   int tam = sizeof(dados) / sizeof(dados[0]);
 
-  quick_sort(dados, 0, tam);
+  heap_sort(dados, tam);
   for(int i = 0; i < tam; i++) printf("%d ", dados[i]);
 
   return 0;
